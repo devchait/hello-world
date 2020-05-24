@@ -1,0 +1,65 @@
+name: Beta-Github-Workflow
+# This workflow is triggered on Push to the repository
+on: [push]
+
+jobs:
+    first_job:
+        name: Beta-Github-Pipeline
+        # This jobs runs on Ubuntu 18.04
+        runs-on: ubuntu-18.04
+        steps:
+        - name: Install dependencies
+          run: |
+            sudo apt install -qq -y libunittest++2 libunittest++-dev
+            sudo apt install libgtest-dev
+        - name: Make GoogleTest
+          run: |
+            pwd
+            ls -lart
+            cd /usr/src/googletest/googletest
+            ls -lart
+            sudo mkdir build
+            cd build
+            sudo cmake ..
+            sudo make
+            sudo cp libgtest* /usr/lib/
+            cd ..
+            sudo rm -rf build
+            sudo mkdir /usr/local/lib/googletest
+            sudo ln -s /usr/lib/libgtest.a /usr/local/lib/googletest/libgtest.a
+            sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/googletest/libgtest_main.a
+            cd /usr/src/googletest/googletest/include
+            sudo cp -r gtest /usr/local/include/
+            pwd
+            ls -lrt
+            cd /usr/local/include/
+            pwd
+            ls -lrt
+            cd /usr/local/lib
+            pwd
+            ls -lrt
+            cd /usr/local/lib/googletest/
+            pwd
+            ls -lrt
+        - name: checkout the master
+          uses: actions/checkout@v2
+        - name: run make
+          run: |
+            cd $GITHUB_WORKSPACE
+            pwd
+            ls -lart
+            make
+        - name: tests
+          run: |
+            make check
+        - name: release the artificats
+          uses: actions/upload-artifact@v1
+          with:
+            name: all_test_main
+            path: all_test_main
+        - name: clean binaries
+          run: |
+            make clean
+        - name: clean logs
+          run: |
+            make cleanlogs
