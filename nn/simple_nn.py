@@ -49,7 +49,7 @@ x =[np.array(a).reshape(1, 30), np.array(b).reshape(1, 30),
 y = np.array(y)
   
   
-print(x, "\n\n", y)
+#print(x, "\n\n", y)
 # activation function
   
 def sigmoid(x):
