@@ -145,7 +145,7 @@ def predict(x, w1, w2):
     
 w1 = generate_wt(30, 6)
 w2 = generate_wt(6, 3)
-print(w1, "\n\n", w2)
+#print(w1, "\n\n", w2)
 
 """The arguments of train function are data set list x, 
 correct labels y, weights w1, w2, learning rate = 0.1, 
@@ -167,7 +167,7 @@ plt.xlabel("Epochs:")
 plt.show()
 
 # the trained weigths are
-print(w1, "\n", w2)
+#print(w1, "\n", w2)
 
 """
 The predict function will take the following arguments:
